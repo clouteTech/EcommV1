@@ -1,1 +1,97 @@
-<p>header works!</p>
+<header class="relative z-40 bg-white">
+  <div class="page-x relative">
+    <!-- Row 1: logo, services, delivery location -->
+    <div class="flex h-14 items-center md:h-[68px] md:border-b md:border-gray-200">
+      <a
+        routerLink="/"
+        class="flex h-full w-[120px] shrink-0 flex-col items-center justify-center bg-fk-yellow md:w-[167px]"
+        aria-label="Flipkart home"
+        (click)="resetSearch()"
+      >
+        <span class="text-[26px] font-extrabold italic leading-none tracking-tight text-fk-blue md:text-[31px]">Flipkart</span>
+        <span class="mt-1.5 text-[9px] font-bold text-fk-blue md:text-[11px]">Explore <span>Plus</span> <span class="text-[8px]">✦</span></span>
+      </a>
+
+      <nav class="ml-[18px] hidden items-center md:flex" aria-label="Services">
+        @for (tab of tabs; track tab.label) {
+          <button type="button" class="group flex w-[120px] flex-col items-center leading-tight lg:w-[171px]">
+            <span class="text-[17px] font-semibold text-fk-ink transition-colors group-hover:text-fk-blue">{{ tab.label }}</span>
+            <span class="mt-1.5 text-[11px] text-gray-500">{{ tab.sub }}</span>
+          </button>
+        }
+      </nav>
+
+      <button type="button" class="ml-auto mr-5 hidden items-center gap-3 rounded-md py-1 hover:bg-gray-50 lg:flex" aria-label="Change delivery location">
+        <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="#212121" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21Z" /><circle cx="12" cy="9.5" r="2.5" /></svg>
+        <span class="flex flex-col text-left leading-tight">
+          <span class="text-[12px] text-gray-500">Deliver to Bengaluru</span>
+          <span class="mt-0.5 text-[15px] font-semibold text-fk-ink">560001</span>
+        </span>
+        <svg viewBox="0 0 24 24" class="ml-[60px] size-3.5" fill="none" stroke="#212121" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+      </button>
+    </div>
+
+    <!-- Row 2: search + account actions -->
+    <div class="flex items-center md:pb-[26px] md:pt-[19px]">
+      <!-- Search -->
+    <form class="relative my-3 flex min-w-0 flex-1 items-center md:my-0 lg:w-[53.5%] lg:flex-none" role="search" (submit)="onSubmit($event)">
+      <svg viewBox="0 0 24 24" class="pointer-events-none absolute left-4 size-5 md:left-6 text-gray-600" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+      <input
+        type="search"
+        name="q"
+        autocomplete="off"
+        placeholder="Search for Products, Brands and More"
+        aria-label="Search for products, brands and more"
+        class="h-11 w-full rounded-[10px] border border-transparent bg-fk-search pl-12 pr-10 md:pl-[61px] text-[15px] text-fk-ink outline-none transition placeholder:text-gray-500 hover:border-gray-300 focus:border-fk-blue focus:bg-white focus:shadow-[0_0_0_3px_rgba(40,116,240,0.15)] md:h-[51px] md:text-[17px] [&::-webkit-search-cancel-button]:hidden"
+        [value]="search.query()"
+        (input)="onInput($event)"
+      />
+      @if (search.query()) {
+        <button type="button" class="absolute right-3 grid size-6 place-items-center rounded-full text-gray-500 hover:bg-black/5" aria-label="Clear search" (click)="clearSearch()">
+          <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+      }
+    </form>
+
+      <!-- Actions -->
+      <div class="absolute right-4 top-0 flex h-14 items-center sm:right-6 md:static md:ml-4 md:h-auto">
+      <a routerLink="/login" class="flex items-center gap-2 rounded-lg px-2 py-2 text-[15px] font-medium text-fk-ink transition hover:bg-gray-100 hover:text-fk-blue md:px-6 md:text-[17px]">
+        <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7" /></svg>
+        Login
+        <svg viewBox="0 0 24 24" class="hidden size-3.5 sm:block" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+      </a>
+
+      <div #moreWrap class="relative">
+        <button
+          type="button"
+          class="flex items-center gap-2 rounded-lg px-2 py-2 text-[15px] font-medium text-fk-ink transition hover:bg-gray-100 hover:text-fk-blue md:px-6 md:text-[17px]"
+          aria-haspopup="menu"
+          [attr.aria-expanded]="moreOpen()"
+          (click)="moreOpen.set(!moreOpen())"
+        >
+          More
+          <svg viewBox="0 0 24 24" class="size-3.5 transition-transform" [class.rotate-180]="moreOpen()" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6" /></svg>
+        </button>
+        @if (moreOpen()) {
+          <ul role="menu" class="absolute right-0 top-full z-50 mt-1 w-60 overflow-hidden rounded-lg bg-white py-1 shadow-xl ring-1 ring-black/10">
+            @for (item of moreItems; track item) {
+              <li role="none">
+                <button type="button" role="menuitem" class="block w-full px-4 py-3 text-left text-sm text-fk-ink hover:bg-fk-search hover:text-fk-blue" (click)="moreOpen.set(false)">{{ item }}</button>
+              </li>
+            }
+          </ul>
+        }
+      </div>
+
+      <a routerLink="/cart" class="relative flex items-center gap-2 rounded-lg px-2 py-2 text-[15px] font-medium text-fk-ink transition hover:bg-gray-100 hover:text-fk-blue md:px-6 md:text-[17px]" [attr.aria-label]="'Cart, ' + cart.count() + ' items'">
+        <svg viewBox="0 0 24 24" class="size-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 3h2.6l2.3 11.2a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.5-1.1L20.5 7H6" /><circle cx="9.5" cy="19.5" r="1.5" /><circle cx="17" cy="19.5" r="1.5" /></svg>
+        Cart
+        @if (cart.count() > 0) {
+          <span class="absolute -top-0.5 left-6 grid min-w-5 place-items-center rounded-full bg-[#ff6161] px-1 text-[11px] font-bold leading-5 text-white">{{ cart.count() }}</span>
+        }
+      </a>
+    </div>
+    </div>
+  </div>
+</header>
+

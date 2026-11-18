@@ -1,0 +1,65 @@
+<section class="relative pt-7 xl:pl-[9px] xl:pr-[30px]" aria-roledescription="carousel" aria-label="Promotions">
+  <div class="group/banner relative">
+    <ul
+      #track
+      class="no-scrollbar flex snap-x snap-mandatory gap-[18px] overflow-x-auto scroll-smooth"
+      (scroll)="onScroll()"
+    >
+      @for (banner of banners(); track banner.id) {
+        <li
+          class="relative flex h-[210px] w-[88%] shrink-0 snap-start overflow-hidden rounded-2xl sm:h-[250px] sm:w-[calc((100%-18px)/2)] lg:h-[268px] lg:w-[calc((100%-36px)/3)]"
+          [style.background]="banner.bg"
+        >
+          <div class="z-10 flex w-[53%] flex-col justify-start pl-5 pt-6 sm:pl-6 xl:pl-[25px]">
+            <p class="text-[10px] font-medium uppercase leading-[14px] tracking-[0.12em] text-gray-600 sm:text-[11px]">{{ banner.eyebrow }}</p>
+            <h2 class="mt-[13px] text-[22px] font-bold leading-[28px] tracking-[-0.01em] text-fk-ink sm:text-[26px] sm:leading-8 lg:text-[28px] lg:leading-[34px]">
+              @for (line of banner.titleLines; track line) {
+                {{ line }}<br />
+              }
+            </h2>
+            <p class="mt-[11px] text-base font-medium leading-6 sm:text-lg" [style.color]="banner.accent">{{ banner.subtitle }}</p>
+            <button
+              type="button"
+              class="mt-3 inline-flex h-[34px] w-fit items-center gap-2 rounded-md bg-white px-4 text-[13px] font-medium text-fk-ink shadow-sm transition hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fk-blue"
+            >
+              {{ banner.cta }}
+              <svg viewBox="0 0 24 24" class="size-3.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </button>
+          </div>
+          <img [src]="banner.image" alt="" class="absolute inset-y-0 right-0 h-full w-auto max-w-[52%] object-cover object-left" loading="lazy" />
+        </li>
+      }
+    </ul>
+
+    <button
+      type="button"
+      class="absolute left-2 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/95 shadow-md ring-1 ring-black/5 transition hover:scale-105 md:opacity-0 md:group-hover/banner:opacity-100 focus-visible:opacity-100"
+      aria-label="Previous banner"
+      (click)="prev()"
+    >
+      <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="#212121" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+    </button>
+    <button
+      type="button"
+      class="absolute right-2 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/95 shadow-md ring-1 ring-black/5 transition hover:scale-105 md:opacity-0 md:group-hover/banner:opacity-100 focus-visible:opacity-100"
+      aria-label="Next banner"
+      (click)="next()"
+    >
+      <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="#212121" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+    </button>
+  </div>
+
+  <div class="mt-[19px] flex items-center justify-center gap-1.5" role="tablist" aria-label="Choose banner">
+    @for (banner of banners(); track banner.id; let i = $index) {
+      <button
+        type="button"
+        role="tab"
+        class="h-1.5 rounded-full transition-all duration-300"
+        [class]="activeIndex() === i ? 'w-6 bg-fk-blue' : 'w-1.5 bg-gray-300 hover:bg-gray-400'"
+        [attr.aria-selected]="activeIndex() === i"
+        [attr.aria-label]="'Go to banner ' + (i + 1)"
+        (click)="goTo(i)"
+      ></button>
+    }
+  </div>
+</section>

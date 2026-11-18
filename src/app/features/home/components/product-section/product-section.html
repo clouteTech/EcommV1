@@ -1,0 +1,63 @@
+@let data = section();
+
+<section class="pt-[38px] xl:pr-[53px]" [attr.aria-labelledby]="'section-' + data.id">
+  <div class="mb-5 flex items-center justify-between gap-4">
+    <div class="min-w-0">
+      <h2 [id]="'section-' + data.id" class="text-2xl font-bold leading-9 tracking-[-0.01em] text-[#1a1a1a] sm:text-[26px]">{{ data.title }}</h2>
+      @if (data.subtitle) {
+        <p class="mt-0.5 text-[13px] text-gray-500">{{ data.subtitle }}</p>
+      }
+    </div>
+    @if (canExpand()) {
+      <button
+        type="button"
+        class="inline-flex shrink-0 items-center gap-2 rounded-md bg-[#1a6ef5] px-4 h-[38px] text-sm font-medium text-white transition hover:bg-fk-blue-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a6ef5]"
+        [attr.aria-expanded]="expanded()"
+        (click)="expanded.set(!expanded())"
+      >
+        {{ expanded() ? 'Show less' : 'View all' }}
+        <svg viewBox="0 0 24 24" class="size-4" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          @if (expanded()) {
+            <path d="M5 15l7-7 7 7" />
+          } @else {
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          }
+        </svg>
+      </button>
+    }
+  </div>
+
+  @if (isGrid()) {
+    <div class="grid gap-x-[18px]" [class]="gridClass()">
+      @for (product of data.products; track product.id) {
+        <app-product-card [product]="product" [variant]="data.variant" (selected)="selected.emit($event)" />
+      }
+    </div>
+  } @else {
+    <div class="group/scroll relative">
+      <div #scroller class="no-scrollbar -mx-4 flex snap-x snap-proximity scroll-pl-4 items-stretch gap-[18px] overflow-x-auto scroll-smooth px-4 pb-2 sm:-mx-6 sm:scroll-pl-6 sm:px-6 xl:mx-0 xl:scroll-pl-0 xl:px-0">
+        @for (product of data.products; track product.id) {
+          <div class="shrink-0 snap-start" [class]="itemClass()">
+            <app-product-card [product]="product" [variant]="data.variant" (selected)="selected.emit($event)" />
+          </div>
+        }
+      </div>
+      <button
+        type="button"
+        class="absolute left-1 top-1/3 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-white shadow-md ring-1 ring-black/5 transition hover:scale-105 md:grid md:opacity-0 md:group-hover/scroll:opacity-100"
+        aria-label="Scroll left"
+        (click)="scrollBy(-1)"
+      >
+        <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="#212121" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+      </button>
+      <button
+        type="button"
+        class="absolute right-1 top-1/3 hidden size-10 -translate-y-1/2 place-items-center rounded-full bg-white shadow-md ring-1 ring-black/5 transition hover:scale-105 md:grid md:opacity-0 md:group-hover/scroll:opacity-100"
+        aria-label="Scroll right"
+        (click)="scrollBy(1)"
+      >
+        <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="#212121" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+      </button>
+    </div>
+  }
+</section>

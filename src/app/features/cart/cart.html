@@ -1,0 +1,47 @@
+<div class="mx-auto w-full max-w-[1100px] px-4 py-8 sm:px-8">
+  <h1 class="text-2xl font-bold text-fk-ink">My Cart ({{ cart.count() }})</h1>
+
+  @if (cart.items().length) {
+    <div class="mt-6 grid gap-6 lg:grid-cols-[1fr_340px]">
+      <ul class="divide-y divide-gray-200 rounded-xl border border-gray-200 bg-white">
+        @for (item of cart.items(); track item.product.id) {
+          <li class="flex gap-4 p-4">
+            <div class="size-24 shrink-0 overflow-hidden rounded-lg sm:size-28" [style.background]="item.product.bg">
+              <img [src]="item.product.image" [alt]="item.product.name" class="size-full object-contain p-2" />
+            </div>
+            <div class="flex min-w-0 flex-1 flex-col">
+              <p class="truncate font-semibold text-fk-ink">{{ item.product.name }}</p>
+              @if (item.product.brand) {
+                <p class="text-sm text-gray-500">{{ item.product.brand }}</p>
+              }
+              <p class="mt-2 flex flex-wrap items-baseline gap-x-2">
+                <span class="text-lg font-bold">₹{{ inr(item.product.price) }}</span>
+                <span class="text-sm text-gray-400 line-through">₹{{ inr(item.product.mrp) }}</span>
+              </p>
+              <div class="mt-auto flex items-center justify-between pt-2 text-sm">
+                <span class="text-gray-600">Qty: {{ item.quantity }}</span>
+                <button type="button" class="font-semibold uppercase text-fk-blue hover:underline" (click)="cart.remove(item.product.id)">Remove</button>
+              </div>
+            </div>
+          </li>
+        }
+      </ul>
+
+      <aside class="h-fit rounded-xl border border-gray-200 bg-white p-5">
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-gray-500">Price details</h2>
+        <div class="mt-4 flex items-center justify-between border-t border-dashed border-gray-300 pt-4 text-lg font-bold">
+          <span>Total Amount</span>
+          <span>₹{{ inr(cart.total()) }}</span>
+        </div>
+        <button type="button" class="mt-5 w-full rounded-md bg-[#fb641b] px-4 py-3 text-sm font-semibold text-white hover:brightness-95">Place order</button>
+      </aside>
+    </div>
+  } @else {
+    <section class="grid place-items-center gap-3 py-20 text-center">
+      <img [src]="emptyIcon" alt="" class="size-14 opacity-40" />
+      <h2 class="text-xl font-semibold text-fk-ink">Your cart is empty!</h2>
+      <p class="text-sm text-gray-500">Add items to it now.</p>
+      <a routerLink="/" class="mt-2 rounded-md bg-[#1a6ef5] px-6 py-2.5 text-sm font-medium text-white hover:bg-fk-blue-dark">Shop now</a>
+    </section>
+  }
+</div>
