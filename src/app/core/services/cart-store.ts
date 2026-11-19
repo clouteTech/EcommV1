@@ -16,7 +16,7 @@ export class CartStore {
     });
   }
 
-  remove(productId: number): void {
+  remove(productId: string): void {
     this.items.update((list) => list.filter((i) => i.product.id !== productId));
   }
 }

@@ -1,0 +1,17 @@
+import { IMAGES } from '../../../../core/constants/image-assets';
+import { Product } from '../../../../models/product.model';
+
+const I = IMAGES.products;
+
+export const FASHION: Product[] = [
+  { id: 'fash-lee-cooper-watch-rose', category: 'fashion', brand: 'LEE COOPER', name: 'Quartz Analog Watch - For Women (Rose Dial)', description: 'Rose dial with two-tone strap.', image: I.watchRose, bg: '#f1f1f1', price: 3449, mrp: 18450, rating: 4.3, ratingCount: 20, offer: '₹2,991 with Coupon offer + more', keywords: ['watch', 'wrist watch', 'analog'] },
+  { id: 'fash-lee-cooper-watch-white', category: 'fashion', brand: 'LEE COOPER', name: 'Quartz Analog Watch - For Women (White Dial)', description: 'White dial with two-tone strap.', image: I.watchWhite, bg: '#f1f1f1', price: 3359, mrp: 18450, rating: 4.3, ratingCount: 31, offer: '₹2,906 with Coupon offer + more', keywords: ['watch', 'wrist watch', 'analog'] },
+  { id: 'fash-lavie-luxe-satchel-white', category: 'fashion', brand: 'Lavie Luxe', name: 'Women White Satchel', description: 'Structured handbag with top handle.', image: I.handbagWhite, bg: '#f0f0f0', price: 3569, mrp: 6499, rating: 5, ratingCount: 7, offer: '₹3,390 with Bank offer', keywords: ['handbag', 'bag', 'purse'] },
+  { id: 'fash-lavie-luxe-tote-tan', category: 'fashion', brand: 'Lavie Luxe', name: 'Women Tan Tote Bag', description: 'Roomy tote with zip closure.', image: I.toteBag, bg: '#f7efe4', price: 1899, mrp: 3999, rating: 4.2, ratingCount: 412, offer: '₹1,790 with Bank offer', keywords: ['handbag', 'bag', 'purse'] },
+  { id: 'fash-fastrack-wayfarer-sunglasses', category: 'fashion', brand: 'Fastrack', name: 'UV Protection Wayfarer Sunglasses', description: 'Classic black wayfarer frame.', image: I.sunglasses, bg: '#d0c6ca', price: 509, mrp: 1200, rating: 4.1, ratingCount: 105572, keywords: ['sunglasses', 'shades', 'eyewear', 'goggles'] },
+  { id: 'fash-roadster-tshirt-blue', category: 'fashion', brand: 'Roadster', name: 'Cotton Round Neck T-Shirt', description: 'Soft everyday tee, regular fit.', image: I.tshirt, bg: '#e9f1fa', price: 349, mrp: 999, rating: 4.0, ratingCount: 18240, tag: 'New Arrival', keywords: ['tshirt', 't-shirt', 'tee', 'clothing', 'men'] },
+  { id: 'fash-puma-running-shoes', category: 'fashion', brand: 'Puma', name: 'Running Shoes For Men', description: 'Cushioned sole, breathable mesh.', image: I.sneakers, bg: '#f2f2f2', landscape: true, price: 2299, mrp: 5999, rating: 4.2, ratingCount: 9812, tag: 'TRENDING', freeDelivery: true, offer: '₹2,069 with Bank offer', keywords: ['shoes', 'sneakers', 'footwear', 'running'] },
+  { id: 'fash-levis-511-slim-jeans', category: 'fashion', brand: "Levi's", name: '511 Slim Fit Men Blue Jeans', description: 'Stretch denim with mid-rise waist.', image: I.jeans, bg: '#eaeff6', price: 1799, mrp: 3999, rating: 4.2, ratingCount: 26410, tag: 'BESTSELLER', keywords: ['jeans', 'denim', 'trousers', 'clothing', 'men'] },
+  { id: 'fash-libas-printed-kurta', category: 'fashion', brand: 'Libas', name: 'Women Printed Straight Kurta', description: 'Cotton blend with gold trim detail.', image: I.kurta, bg: '#fbeaf1', price: 649, mrp: 1999, rating: 4.1, ratingCount: 8934, keywords: ['kurta', 'kurti', 'ethnic', 'clothing', 'women'] },
+  { id: 'fash-campus-slide-sandals', category: 'fashion', brand: 'Campus', name: 'Men Brown Slide Sandals', description: 'Cushioned footbed with soft straps.', image: I.sandals, bg: '#f4eee4', price: 449, mrp: 999, rating: 4.0, ratingCount: 15720, keywords: ['sandals', 'slippers', 'footwear', 'flip flops', 'men'] },
+];

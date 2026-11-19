@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "check:assets": "node scripts/check-assets.mjs",
+    "images:sync": "node scripts/check-assets.mjs --write"
   },
   "private": true,
   "packageManager": "npm@10.9.8",

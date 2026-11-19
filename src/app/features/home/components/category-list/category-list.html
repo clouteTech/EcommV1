@@ -1,5 +1,5 @@
-<nav aria-label="Shop by category" class="-mx-4 border-b border-gray-200 sm:-mx-6 xl:mx-0 xl:w-fit">
-  <ul class="no-scrollbar flex items-stretch overflow-x-auto px-4 sm:px-6 xl:px-0">
+<nav aria-label="Shop by category" class="relative -mx-4 border-b border-gray-200 sm:-mx-6 xl:mx-0">
+  <ul #scroller class="no-scrollbar flex items-stretch overflow-x-auto px-4 sm:px-6 xl:px-0" (scroll)="update()">
     @for (category of categories(); track category.id) {
       <li class="shrink-0">
         <button
@@ -19,4 +19,16 @@
       </li>
     }
   </ul>
+
+  <!-- Desktop arrows: only when the row is wider than the screen -->
+  @if (canLeft()) {
+    <button type="button" class="absolute left-1 top-1/2 hidden size-9 -translate-y-1/2 place-items-center rounded-full bg-white shadow-md ring-1 ring-black/5 hover:scale-105 md:grid" aria-label="Scroll categories left" (click)="scrollBy(-1)">
+      <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="#212121" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7" /></svg>
+    </button>
+  }
+  @if (canRight()) {
+    <button type="button" class="absolute right-1 top-1/2 hidden size-9 -translate-y-1/2 place-items-center rounded-full bg-white shadow-md ring-1 ring-black/5 hover:scale-105 md:grid" aria-label="Scroll categories right" (click)="scrollBy(1)">
+      <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="#212121" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7" /></svg>
+    </button>
+  }
 </nav>

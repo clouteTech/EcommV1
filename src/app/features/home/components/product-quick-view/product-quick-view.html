@@ -20,8 +20,8 @@
       <svg viewBox="0 0 24 24" class="size-5" fill="none" stroke="#212121" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
     </button>
 
-    <div class="grid aspect-square place-items-center sm:aspect-auto sm:min-h-[420px]" [style.background]="item.bg">
-      <img [src]="item.image" [alt]="item.name" class="max-h-[320px] w-full object-contain p-8" />
+    <div class="grid aspect-square place-items-center sm:aspect-auto sm:min-h-[420px]" [style.background]="bg()">
+      <img [src]="img()" [alt]="item.name" appImgFallback class="max-h-[320px] w-full object-contain p-8" />
     </div>
 
     <div class="flex flex-col p-6 sm:p-8">

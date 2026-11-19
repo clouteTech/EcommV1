@@ -7,4 +7,6 @@ export interface Banner {
   image: string;
   bg: string;
   accent: string;
+  /** Category the "Shop now" button opens. */
+  category: string;
 }

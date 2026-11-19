@@ -1,8 +1,11 @@
 import { Component, computed, input, output, signal } from '@angular/core';
+import { productBg, productImage } from '../../../../core/utils/product-image';
+import { ImgFallback } from '../../../../shared/directives/img-fallback';
 import { CardVariant, Product } from '../../../../models/product.model';
 
 @Component({
   selector: 'app-product-card',
+  imports: [ImgFallback],
   templateUrl: './product-card.html',
   host: { class: 'block h-full' },
 })
@@ -17,12 +20,10 @@ export class ProductCard {
     return Math.floor((1 - price / mrp) * 100);
   });
 
-  /** Photos fill the box; legacy SVG illustrations and wide photos are shown uncropped. */
-  protected readonly fit = computed(() => {
-    const p = this.product();
-    if (p.image.endsWith('.svg')) return 'object-contain p-4';
-    return this.variant() === 'listing' && p.landscape ? 'object-contain' : 'object-cover';
-  });
+  /** Every picture is shown whole (never cropped or stretched). */
+  protected readonly img = computed(() => productImage(this.product()));
+  protected readonly bg = computed(() => productBg(this.product()));
+  protected readonly fit = computed(() => 'object-contain');
 
   protected inr(value: number): string {
     return value.toLocaleString('en-IN');

@@ -9,10 +9,11 @@
     (click)="selected.emit(item)"
     (keydown.enter)="selected.emit(item)"
   >
-    <div class="relative h-[184px] overflow-hidden rounded-lg" [style.background]="item.bg">
+    <div class="relative h-[184px] overflow-hidden rounded-lg" [style.background]="bg()">
       <img
-        [src]="item.image"
+        [src]="img()"
         [alt]="item.name"
+        appImgFallback
         loading="lazy"
         class="h-full w-full transition-transform duration-300 group-hover:scale-105"
         [class]="fit()"
@@ -74,10 +75,11 @@
     (click)="selected.emit(item)"
     (keydown.enter)="selected.emit(item)"
   >
-    <div class="relative aspect-[3/4] overflow-hidden rounded-md" [style.background]="item.bg">
+    <div class="relative aspect-[3/4] overflow-hidden rounded-md" [style.background]="bg()">
       <img
-        [src]="item.image"
+        [src]="img()"
         [alt]="item.name"
+        appImgFallback
         loading="lazy"
         class="h-full w-full transition-transform duration-300 group-hover:scale-105"
         [class]="fit()"
@@ -110,6 +112,7 @@
       <p class="mt-0.5 flex items-baseline gap-x-1.5 leading-5">
         <span class="text-[11px] text-gray-400 line-through">₹{{ inr(item.mrp) }}</span>
         <span class="text-[13px] font-bold text-[#212121]">₹{{ inr(item.price) }}</span>
+        <span class="text-[11px] font-semibold text-fk-green">{{ discount() }}% off</span>
       </p>
       @if (item.offer) {
         <p class="truncate text-xs font-medium leading-4 text-[#1a56d6]">{{ item.offer }}</p>

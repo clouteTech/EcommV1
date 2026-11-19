@@ -9,6 +9,7 @@ import { ProductQuickView } from './components/product-quick-view/product-quick-
 import { ProductSection } from './components/product-section/product-section';
 import { PromotionalBanner } from './components/promotional-banner/promotional-banner';
 import { ALL_PRODUCTS, BANNERS, CATEGORIES, SECTIONS } from './data/home-data';
+import { filterProducts } from '../../core/utils/product-search';
 
 @Component({
   selector: 'app-home',
@@ -27,7 +28,7 @@ export class Home {
   protected readonly banners = BANNERS;
   protected readonly sections = SECTIONS;
 
-  protected readonly activeCategory = signal('for-you');
+  protected readonly activeCategory = this.search.category;
   protected readonly selectedProduct = signal<Product | null>(null);
 
   /** Present only while a search or category filter is active. */
@@ -38,13 +39,11 @@ export class Home {
       return null;
     }
 
-    const products = ALL_PRODUCTS.filter(
-      (p) =>
-        (category === 'for-you' || p.category === category) &&
-        (!query ||
-          `${p.brand ?? ''} ${p.name} ${p.description} ${p.category}`
-            .toLowerCase()
-            .includes(query)),
+    // Category pages read only that category's products; search reads the whole catalogue.
+    const products = filterProducts(
+      ALL_PRODUCTS,
+      { category, query },
+      (id) => this.categories.find((c) => c.id === id)?.label ?? id,
     );
     const label = this.categories.find((c) => c.id === category)?.label ?? 'Products';
 
@@ -59,13 +58,11 @@ export class Home {
   });
 
   protected selectCategory(id: string): void {
-    this.activeCategory.set(id);
-    this.search.query.set('');
+    this.search.selectCategory(id);
   }
 
   protected clearFilters(): void {
-    this.activeCategory.set('for-you');
-    this.search.query.set('');
+    this.search.reset();
   }
 
   protected addToCart(product: Product): void {
