@@ -1,4 +1,5 @@
-import { Component, ElementRef, computed, input, output, signal, viewChild } from '@angular/core';
+import { Component, ElementRef, computed, inject, input, output, signal, viewChild } from '@angular/core';
+import { BrokenImages } from '../../../../core/services/broken-images';
 import { Product, ProductSectionData } from '../../../../models/product.model';
 import { ProductCard } from '../product-card/product-card';
 
@@ -10,6 +11,10 @@ import { ProductCard } from '../product-card/product-card';
 export class ProductSection {
   readonly section = input.required<ProductSectionData>();
   readonly selected = output<Product>();
+
+  private readonly broken = inject(BrokenImages);
+  /** Products of this section whose picture has not failed to load. */
+  protected readonly products = computed(() => this.section().products.filter((p) => !this.broken.isBroken(p.image)));
 
   private readonly scroller = viewChild<ElementRef<HTMLElement>>('scroller');
   protected readonly expanded = signal(false);

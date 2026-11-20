@@ -1,6 +1,7 @@
 import { IMAGES } from '../../core/constants/image-assets';
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { BrokenImages } from '../../core/services/broken-images';
 import { CartStore } from '../../core/services/cart-store';
 import { SearchStore } from '../../core/services/search-store';
 import { Product, ProductSectionData } from '../../models/product.model';
@@ -23,6 +24,7 @@ export class Home {
   private readonly router = inject(Router);
   private readonly cart = inject(CartStore);
   private readonly search = inject(SearchStore);
+  private readonly broken = inject(BrokenImages);
 
   protected readonly categories = CATEGORIES;
   protected readonly banners = BANNERS;
@@ -40,11 +42,12 @@ export class Home {
     }
 
     // Category pages read only that category's products; search reads the whole catalogue.
+    // Products whose picture failed to load in the browser are dropped, so the count matches the cards shown.
     const products = filterProducts(
       ALL_PRODUCTS,
       { category, query },
       (id) => this.categories.find((c) => c.id === id)?.label ?? id,
-    );
+    ).filter((p) => !this.broken.isBroken(p.image));
     const label = this.categories.find((c) => c.id === category)?.label ?? 'Products';
 
     return {

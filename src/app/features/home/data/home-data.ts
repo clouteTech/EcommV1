@@ -55,7 +55,8 @@ const RECOMMENDED_IDS = [
   'fash-fastrack-wayfarer-sunglasses',
 ];
 
-const pick = (ids: string[]): Product[] => ids.map(productById);
+/** Looks the ids up in the catalogue and silently skips products that are hidden (photo pending). */
+const pick = (ids: string[]): Product[] => ids.map(productById).filter((p): p is Product => !!p);
 
 /** Sections rendered on the home page. They only reference catalogue products – no copies. */
 export const SECTIONS: ProductSectionData[] = [

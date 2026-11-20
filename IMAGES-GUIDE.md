@@ -1,15 +1,14 @@
 # Product images – where they are and how to add the photographs
 
 ## Rule: product pictures are real photographs only
-No drawings, vectors or illustrations are used for products. A product whose photograph has not been added yet shows a neutral
-**"Photo coming soon"** picture (`public/images/placeholder-product.png`) – never a cartoon and never a broken-image icon.
+No drawings, vectors, placeholders or "Photo coming soon" pictures are used for products. A product whose photograph has not been
+added yet is **hidden from the website** (home, categories, search, quick view, cart) until its file exists – there is no fallback image.
 
 ## Folder structure
 ```
 public/images/
 ├── banners/            promotional banners
 ├── icons/              category icons (kept as icons)
-├── placeholder-product.png    "Photo coming soon" picture
 ├── payments.png
 └── products/
     ├── electronics/  appliances/  mobiles/  fashion/  home/  beauty/
@@ -25,7 +24,7 @@ Angular serves `public/` at the site root, so the browser path is `/images/produ
 ## How to add a photograph (3 steps)
 1. Save the photo (white or light-grey studio background, product centred, 800×800 px or larger) with the **exact file name and folder** from the list.
 2. Run `npm run images:sync` – it checks the files, rewrites `src/app/core/constants/pending-images.ts` and refreshes `PRODUCT_IMAGE_VERIFICATION.md`.
-3. Restart `ng serve` (new files in `public/` need a restart) – the product now shows its photo everywhere (home, categories, search, quick view, cart).
+3. Restart `ng serve` (new files in `public/` need a restart) – the product appears again, with its photo, everywhere (home, categories, search, quick view, cart).
 
 If your photo is a `.png` or `.webp`, either save it as `.jpg`, or change the extension in that one line of
 `src/app/core/constants/image-assets.ts`, then run `npm run images:sync`.
@@ -33,8 +32,8 @@ If your photo is a `.png` or `.webp`, either save it as `.jpg`, or change the ex
 ## Where paths are set
 - **`src/app/core/constants/image-assets.ts`** – ONE place for every path (`IMAGES.products.laptop` → `/images/products/electronics/laptop.jpg`).
 - **`src/app/features/home/data/catalog/*.ts`** – each product uses `image: I.<key>` (one picture per product, never shared).
-- **`src/app/core/utils/product-image.ts`** – picks the photo, or the placeholder while the photo is pending. Used by cards, quick view and cart.
-- **`src/app/shared/directives/img-fallback.ts`** – if a file ever fails to load, swaps in the placeholder once.
+- **`src/app/features/home/data/catalog/index.ts`** – `PRODUCT_CATALOG` (what the site shows) = `FULL_CATALOG` minus products listed in `pending-images.ts`.
+- **`src/app/core/constants/pending-images.ts`** – generated list of missing photo files (do not edit by hand).
 
 ## Checks
 - `npm run check:assets` – every referenced file exists (exact upper/lower-case), is a valid PNG/JPEG, and no product shares a picture.

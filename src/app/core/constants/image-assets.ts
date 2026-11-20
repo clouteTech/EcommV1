@@ -38,8 +38,8 @@ export const IMAGES = {
 
   /**
    * Product photographs – public/images/products/<category>/
-   * One file per product. Files that do not exist yet are listed in `pending-images.ts`; their cards show the
-   * neutral "Photo coming soon" picture until you drop the photo in (same file name) and run `npm run images:sync`.
+   * One file per product. Files that do not exist yet are listed in `pending-images.ts`; those products are hidden from the
+   * website (no placeholder is ever shown) until you add the real photo (same file name) and run `npm run images:sync`.
    */
   products: {
     /** public/images/products/electronics/ */
@@ -146,9 +146,6 @@ export const IMAGES = {
     moneyHabits: '/images/products/books/money-habits.jpg',
     kidsStories: '/images/products/books/kids-stories.jpg',
   },
-
-  /** Shown automatically when a product picture fails to load – public/images/placeholder-product.png */
-  fallback: '/images/placeholder-product.png',
 
   /** Footer payment-methods strip – public/images/payments.png */
   payments: '/images/payments.png',
